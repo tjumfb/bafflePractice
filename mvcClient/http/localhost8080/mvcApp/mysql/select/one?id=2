@@ -1,0 +1,5 @@
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 May 2019 05:41:55 GMT
+entity
+{"id":2,"age":39,"sex":"a","name":"mfb"}

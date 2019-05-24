@@ -1,0 +1,5 @@
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 21 May 2019 05:41:55 GMT
+entity
+[{"SEX":"a","ID":2,"NAME":"mfb","AGE":39},{"SEX":"\b?","ID":3,"NAME":"mfb","AGE":20},{"SEX":"\b?","ID":4,"NAME":"mfb","AGE":20},{"SEX":"\b?","ID":5,"NAME":"mfb","AGE":20},{"SEX":"\b?","ID":6,"NAME":"mfb","AGE":20},{"SEX":"a","ID":7,"NAME":"cilent_test_1","AGE":22}]

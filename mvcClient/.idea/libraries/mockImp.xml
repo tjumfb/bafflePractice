@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mockImp">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../mockImp/target/mockImp.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace指用户自定义的命名空间。 -->
+<mapper namespace="main.mapper.UserMapper">
+
+    <!--
+        id="save"是唯一的标示符
+        parameterType属性指明插入时使用的参数类型
+        useGeneratedKeys="true"表示使用数据库的自动增长策略
+     -->
+    <insert id="save" parameterType="orm.User" useGeneratedKeys="true">
+  	INSERT INTO TB_USER(name,sex,age) 
+  	VALUES(#{name},#{sex},#{age})
+  </insert>
+    <select id="selectbyid" parameterType="int" resultType="orm.User">
+      select * from tb_user where id=#{id}
+  </select>
+    <select id="selectall" resultType="map">
+      SELECT * from TB_USER
+  </select>
+    <update id="update" parameterType="orm.User">
+      UPDATE TB_USER
+      set name=#{name}, sex=#{sex}, age=#{age}
+      where id=#{id}
+  </update>
+    <delete id="delete" parameterType="int">
+      delete from tb_user where id = #{id}
+  </delete>
+</mapper>
