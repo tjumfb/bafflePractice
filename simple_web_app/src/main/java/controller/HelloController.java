@@ -1,7 +1,8 @@
 package controller;
-
+import baffle.Baffle;
 import dao.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +22,7 @@ public class HelloController {
 
     @RequestMapping(value = "/ram/add", method = RequestMethod.GET)
     @ResponseBody
+    @Baffle(true)
     public Object addRam(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "sex") String sex,
