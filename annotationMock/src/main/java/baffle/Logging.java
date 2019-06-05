@@ -15,9 +15,12 @@ import java.util.logging.Logger;
 @Component
 @Slf4j
 public class Logging {
-    Logger logger = Logger.getLogger("baffleLog");
-    @Value("#{configProperties['power']}")
+    public static Logger logger = Logger.getLogger("baffleLog");
+    @Value("#{configProperties['annotationMock.outpath']}")
+    String path;
+    @Value("#{configProperties['annotationMock.power']}")
     boolean tag;
+
     /** Following is the definition for a pointcut to select
      *  all the methods available. So advice will be called
      *  for all the methods.
@@ -30,36 +33,31 @@ public class Logging {
      */
     @Before("selectAll()")
     public void beforeAdvice(JoinPoint joinPoint){
+        System.out.println("before");
     }
     @Around("selectAll()&&@annotation(baffle)")
     public Object aroundAdvice(ProceedingJoinPoint joinPoint, Baffle baffle) throws Throwable {
+        joinPoint.proceed();
         if(baffle.value()&&tag) {
             String fileName = ProcessFile.getFileName(joinPoint.getSignature().toString(), joinPoint.getArgs());
-            File file = new File(fileName);
+            File file = new File(path+fileName);
             if (file.exists()) {
                 logger.info("挡板发动");
+//                joinPoint.proceed();
                 return ProcessFile.getObjectByObjectInput(file);
-            } else {
-                ProcessFile.createNewFile(joinPoint.getSignature().toString(), joinPoint.getArgs());
-                ProcessFile.saveObjectByObjectOutput(joinPoint.proceed(), file);
-                logger.info("新结果已保存");
+            }else {
+                ProcessFile.createNewFile(path,joinPoint.getSignature().toString(),joinPoint.getArgs());
+                Object o = joinPoint.proceed();
+                ProcessFile.saveObjectByObjectOutput(o,file);
+                return o;
             }
+        }else {
+            return joinPoint.proceed();
         }
-        return joinPoint.proceed();
     }
-    /**
-     * This is the method which I would like to execute
-     * after a selected method execution.
-     */
-    @After("selectAll()")
-    public void afterAdvice(){
-    }
-    /**
-     * This is the method which I would like to execute
-     * when any method returns.
-     */
-    @AfterReturning(pointcut = "selectAll()", returning="retVal")
-    public void afterReturningAdvice(JoinPoint joinPoint,Object retVal){
+
+    @AfterReturning(pointcut = "selectAll()")
+    public void afterReturningAdvice(JoinPoint joinPoint){
     }
     /**
      * This is the method which I would like to execute

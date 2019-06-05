@@ -1,9 +1,13 @@
 package fileUtil;
 
+import baffle.Baffle;
+import baffle.Logging;
+
 import java.io.*;
 import java.util.logging.Logger;
 
 public class ProcessFile {
+    static Logger logger = Logger.getLogger("fileLog");
     public static void saveObjectByObjectOutput(Object o, File file) {
         try {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
@@ -20,16 +24,20 @@ public class ProcessFile {
             Object o = inputStream.readObject();
             inputStream.close();
             return o;
-        } catch (Exception e) {
+        }catch (EOFException e){
+            logger.info("读入数据");
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
     //    Object controller.HelloController.addRam(String,String,int)
-    public static void createNewFile(String raw, Object[] args){
-        Logger logger = Logger.getLogger("fileLog");
+    public static void createNewFile(String path, String raw, Object[] args){
+
         raw = raw.split(" ")[1];
         String pathName = raw.replace(".","/").replace("(","/").replace(")","/").replace(",","/");
+        pathName = path + pathName;
         StringBuffer fileName = new StringBuffer();
 
         for(Object o:args){
@@ -45,8 +53,8 @@ public class ProcessFile {
             logger.info("创建目录失败");
         }
         try {
-            System.out.println(pathName+fileName);
-            new File(pathName+fileName).createNewFile();
+            boolean msg = new File(pathName+fileName).createNewFile();
+            if(msg) logger.info("新文件创建："+pathName+fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }

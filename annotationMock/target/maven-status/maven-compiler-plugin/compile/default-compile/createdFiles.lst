@@ -1,3 +1,4 @@
 baffle/Logging.class
 baffle/Baffle.class
 fileUtil/ProcessFile.class
+baffle/BaffleConfig.class
